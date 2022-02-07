@@ -9,7 +9,7 @@ contract Exchange {
 
   constructor() {
     owner = msg.sender;
-    moonCoin = new MoonCoin(address(this));
+    moonCoin = new MoonCoin(address(this)); // mints 500,000 supply to this contract
   }
 
   modifier onlyOwner() {

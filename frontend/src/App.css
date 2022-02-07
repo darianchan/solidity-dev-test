@@ -1,0 +1,28 @@
+
+body {
+  color: rgb(180, 180, 180);
+  background-color: #000000;
+}
+
+.modalContent {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 25%;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+#amount {
+  display: flex;
+  justify-content: center;
+}
+
+#walletButton {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 25%;
+  margin: 0 auto;
+  align-items: center;
+}
