@@ -13,6 +13,9 @@ contract Exchange {
   function swapETHForMoon(uint _moonCoinAmount) public payable {
     uint eth = _moonCoinAmount * 10 ** 18 / 10;
     require(msg.value >= eth);
+
+    (bool success) = moonCoin.transfer(msg.sender, _moonCoinAmount * 10 ** 18);
+    require(success);
   }
   
   receive() external payable {}
