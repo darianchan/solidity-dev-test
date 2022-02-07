@@ -21,6 +21,7 @@ contract Exchange {
     uint eth = _moonCoinAmount * 10 ** 18 / 10;
     require(msg.value >= eth);
 
+    require(moonCoin.balanceOf(address(this)) >= _moonCoinAmount * 10**18);
     (bool success) = moonCoin.transfer(msg.sender, _moonCoinAmount * 10 ** 18);
     require(success);
   }
