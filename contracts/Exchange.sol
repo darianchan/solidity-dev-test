@@ -15,16 +15,16 @@ contract Exchange {
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner);
+        require(msg.sender == owner, "Must be owner!");
         _;
     }
 
     function swapETHForMoon(uint256 _moonCoinAmount) external payable {
-        require(msg.value >= (_moonCoinAmount * 10**18) / 10);
+        require(msg.value >= (_moonCoinAmount * 10**18) / 10, "Not enough ETH sent");
 
-        require(moonCoin.balanceOf(address(this)) >= _moonCoinAmount * 10**18);
+        require(moonCoin.balanceOf(address(this)) >= _moonCoinAmount * 10**18, "No more moon coins available");
         bool success = moonCoin.transfer(msg.sender, _moonCoinAmount * 10**18);
-        require(success);
+        require(success, "Moon Coin transfer failed");
 
         emit Swap(_moonCoinAmount * 10**18, (_moonCoinAmount * 10**18) / 10, msg.sender);
     }
@@ -32,7 +32,7 @@ contract Exchange {
     // sends entire contract's balance to the owner
     function withdraw() public onlyOwner {
         (bool success, ) = owner.call{value: address(this).balance}("");
-        require(success);
+        require(success, "ETH transfer failed");
     }
 
     receive() external payable {}
