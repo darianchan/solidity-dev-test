@@ -19,15 +19,14 @@ contract Exchange {
         _;
     }
 
-    function swapETHForMoon(uint256 _moonCoinAmount) public payable {
-        uint256 eth = (_moonCoinAmount * 10**18) / 10;
-        require(msg.value >= eth);
+    function swapETHForMoon(uint256 _moonCoinAmount) external payable {
+        require(msg.value >= (_moonCoinAmount * 10**18) / 10);
 
         require(moonCoin.balanceOf(address(this)) >= _moonCoinAmount * 10**18);
         bool success = moonCoin.transfer(msg.sender, _moonCoinAmount * 10**18);
         require(success);
 
-        emit Swap(_moonCoinAmount * 10**18, eth, msg.sender);
+        emit Swap(_moonCoinAmount * 10**18, (_moonCoinAmount * 10**18) / 10, msg.sender);
     }
 
     // sends entire contract's balance to the owner
