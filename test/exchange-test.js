@@ -39,7 +39,7 @@ describe("Exchange", function () {
   })
 
   // testing edge case division
-  it("should allow a user to swao eth for one moon coin", async function() {
+  it("should allow a user to swap eth for one moon coin", async function() {
     exchange.swapETHForMoon(1,  {value: ethers.utils.parseEther(".1")});
     let balance = await moonCoin.balanceOf(accounts[0].address);
     balance = ethers.utils.formatEther(balance.toString());
