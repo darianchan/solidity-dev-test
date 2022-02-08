@@ -5,7 +5,7 @@ import Exchange from "./Exchange.json";
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 const signer = provider.getSigner();
-const exchangeAddress = "0x885405c71a2f96FB4f9baf80476f007bCA48F57f"; // 0x16428E1B2db8a5A2B31dCF18bb81ee9773A2fD51 moon coin rinkeby address
+const exchangeAddress = process.env.REACT_APP_EXCHANGE_ADDRESS; // 0x16428E1B2db8a5A2B31dCF18bb81ee9773A2fD51 moon coin rinkeby address
 const exchange = new ethers.Contract(exchangeAddress, Exchange.abi, provider);
 
 class App extends React.Component {
@@ -15,6 +15,7 @@ class App extends React.Component {
     this.state = {
       moonCoinAmount: 0,
       message: null,
+      cost: 0
     };
 
     this.onConnectWallet = this.onConnectWallet.bind(this);
@@ -32,7 +33,10 @@ class App extends React.Component {
   }
 
   onChangeInputAmount(event) {
-    this.setState({ moonCoinAmount: event.target.value });
+    let amount = event.target.value
+    let ethCost = amount / 10
+
+    this.setState({ moonCoinAmount: amount, cost: ethCost});
   }
 
   async onSwap(event) {
@@ -58,13 +62,14 @@ class App extends React.Component {
     return (
       <div>
         <div className="modal">
+          <h2>Swap ETH for Moon Coin</h2>
           <form className="modalContent" onSubmit={this.onSwap}>
             <input
               type="number"
               name="moonCoin"
               onChange={this.onChangeInputAmount}
             ></input>
-            <label id="amount">Moon Coin Amount</label>
+            <label id="amount"># of Moon Coin To Buy</label>
 
             <br />
             <button type="submit">Swap</button>
@@ -72,7 +77,8 @@ class App extends React.Component {
           <button id="walletButton" onClick={this.onConnectWallet}>
             Connect Wallet
           </button>
-          {this.state.message ? <div id="message">{this.state.message}</div> : null}
+          <div className="message">Cost: {this.state.cost} ETH</div>
+          {this.state.message ? <div className="message">{this.state.message}</div> : null}
         </div>
       </div>
     );

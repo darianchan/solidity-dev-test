@@ -3,13 +3,18 @@ body {
   background-color: #919191;
 }
 
+h2 {
+  margin-top: 300px;
+  text-align: center;
+}
+
 .modalContent {
   display: flex;
   justify-content: center;
   flex-direction: column;
   width: 25%;
   margin: 0 auto;
-  margin-top: 300px;
+  margin-top: 45px;
 }
 
 #amount {
@@ -47,7 +52,7 @@ input {
   height: 20px;
 }
 
-#message {
+.message {
   margin-top: 25px;
   text-align: center;
 }
