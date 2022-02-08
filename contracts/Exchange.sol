@@ -4,33 +4,37 @@ import "./MoonCoin.sol";
 
 // Exchange rate is 1 eth = 10 Moon Coins
 contract Exchange {
-  address public owner;
-  MoonCoin public moonCoin;
+    address public owner;
+    MoonCoin public moonCoin;
 
-  constructor() {
-    owner = msg.sender;
-    moonCoin = new MoonCoin(address(this)); // mints 500,000 supply to this contract
-  }
+    event Swap(uint moonCoinAmount, uint ethAmount, address buyer);
 
-  modifier onlyOwner() {
-    require(msg.sender == owner);
-    _;
-  }
+    constructor() {
+        owner = msg.sender;
+        moonCoin = new MoonCoin(address(this)); // mints 500,000 supply to this contract
+    }
 
-  function swapETHForMoon(uint _moonCoinAmount) public payable {
-    uint eth = _moonCoinAmount * 10 ** 18 / 10;
-    require(msg.value >= eth);
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
 
-    require(moonCoin.balanceOf(address(this)) >= _moonCoinAmount * 10**18);
-    (bool success) = moonCoin.transfer(msg.sender, _moonCoinAmount * 10 ** 18);
-    require(success);
-  }
+    function swapETHForMoon(uint256 _moonCoinAmount) public payable {
+        uint256 eth = (_moonCoinAmount * 10**18) / 10;
+        require(msg.value >= eth);
 
-  // sends entire contract's balance to the owner
-  function withdraw() public onlyOwner {
-    (bool success, ) = owner.call{value: address(this).balance}("");
-    require(success);
-  }
-  
-  receive() external payable {}
+        require(moonCoin.balanceOf(address(this)) >= _moonCoinAmount * 10**18);
+        bool success = moonCoin.transfer(msg.sender, _moonCoinAmount * 10**18);
+        require(success);
+
+        emit Swap(_moonCoinAmount * 10**18, eth, msg.sender);
+    }
+
+    // sends entire contract's balance to the owner
+    function withdraw() public onlyOwner {
+        (bool success, ) = owner.call{value: address(this).balance}("");
+        require(success);
+    }
+
+    receive() external payable {}
 }

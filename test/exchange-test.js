@@ -1,6 +1,5 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
-const { BigNumber } = require("ethers")
 
 describe("Exchange", function () {
   let ExchangeFactory;
@@ -26,15 +25,16 @@ describe("Exchange", function () {
 
   it("should mint initial moon coin supply to the exchange contract", async function() {
     let amount = await moonCoin.balanceOf(exchange.address);
-    amount = ethers.utils.formatEther(amount.toString())
+    amount = ethers.utils.formatEther(amount)
+    
     expect(amount).to.eq("500000.0")
   })
 
   it("should allow a user to swap eth for moon coin", async function() {
     exchange.swapETHForMoon(10,  {value: ethers.utils.parseEther("1")});
     let balance = await moonCoin.balanceOf(accounts[0].address);
-    balance = ethers.utils.formatEther(balance.toString());
-
+    balance = ethers.utils.formatEther(balance);
+  
     expect(balance).to.eq("10.0")
   })
 
@@ -42,7 +42,7 @@ describe("Exchange", function () {
   it("should allow a user to swap eth for one moon coin", async function() {
     exchange.swapETHForMoon(1,  {value: ethers.utils.parseEther(".1")});
     let balance = await moonCoin.balanceOf(accounts[0].address);
-    balance = ethers.utils.formatEther(balance.toString());
+    balance = ethers.utils.formatEther(balance);
 
     expect(balance).to.eq("1.0");
   })
