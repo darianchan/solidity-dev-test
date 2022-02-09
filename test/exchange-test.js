@@ -11,12 +11,12 @@ describe("Exchange", function () {
   beforeEach(async function () {
     accounts = await ethers.getSigners();
 
-    // deploy exchange contract
+    // Deploy exchange contract
     ExchangeFactory = await ethers.getContractFactory("Exchange");
     exchange = await ExchangeFactory.deploy();
     await exchange.deployed();
 
-    // get ERC20 functionality
+    // Get ERC20 functionality
     ERC20 = await ethers.getContractFactory("ERC20");
     moonCoin = ERC20.attach(await exchange.moonCoin());
   });

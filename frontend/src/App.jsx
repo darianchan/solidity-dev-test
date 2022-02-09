@@ -5,7 +5,7 @@ import Exchange from "./Exchange.json";
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 const signer = provider.getSigner();
-const exchangeAddress = process.env.REACT_APP_EXCHANGE_ADDRESS; // 0x16428E1B2db8a5A2B31dCF18bb81ee9773A2fD51 moon coin rinkeby address
+const exchangeAddress = process.env.REACT_APP_EXCHANGE_ADDRESS;
 const exchange = new ethers.Contract(exchangeAddress, Exchange.abi, provider);
 
 class App extends React.Component {
@@ -62,7 +62,7 @@ class App extends React.Component {
     return (
       <div>
         <div className="modal">
-          <h2>Swap ETH for Moon Coin</h2>
+          <h2>Swap ETH for Moon Coin </h2>
           <form className="modalContent" onSubmit={this.onSwap}>
             <input
               type="number"
@@ -77,7 +77,8 @@ class App extends React.Component {
           <button id="walletButton" onClick={this.onConnectWallet}>
             Connect Wallet
           </button>
-          <div className="message">Cost: {this.state.cost} ETH</div>
+          <div className="message">Current Cost: {this.state.cost} ETH</div>
+          <div id="exchangeRate">Exchange Rate: 1 ETH = 10 Moon Coins</div>
           {this.state.message ? <div className="message">{this.state.message}</div> : null}
         </div>
       </div>

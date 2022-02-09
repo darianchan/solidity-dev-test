@@ -4,8 +4,13 @@ body {
 }
 
 h2 {
-  margin-top: 300px;
+  margin-top: 250px;
   text-align: center;
+}
+
+#exchangeRate {
+  text-align: center;
+  margin-top: 15px;
 }
 
 .modalContent {
@@ -50,7 +55,7 @@ button:hover {
 }
 
 input {
-  height: 20px;
+  height: 25px;
 }
 
 .message {
