@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 import "./MoonCoin.sol";
 
-// Exchange rate is 1 eth = 10 Moon Coins
+// Exchange rate is 1 ETH = 10 Moon Coins
 contract Exchange {
     address public owner;
     MoonCoin public moonCoin;
